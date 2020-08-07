@@ -1,0 +1,98 @@
+<head>
+  <style> body { margin: 0; } </style>
+
+  <script src="https://unpkg.com/three@0.118.3/build/three.js"></script>
+  <script src="https://unpkg.com/three@0.118.3/examples/js/controls/TrackballControls.js"></script>
+  <script src="https://unpkg.com/three-globe@2.8.7/dist/three-globe.min.js"></script>
+  <!--<script src="../../dist/three-globe.js"></script>-->
+</head>
+
+<body>
+  <div id="globeViz"></div>
+
+  <script>
+
+    // Gen random data
+    const N = 300;
+    const gData = [...Array(N).keys()].map(() => ({
+      lat: (Math.random() - 0.5) * 180,
+      lng: (Math.random() - 0.5) * 360,
+      size: Math.random() / 3,
+      color: ['red', 'white', 'blue', 'green'][Math.round(Math.random() * 3)]
+    }));
+
+    const Globe = new ThreeGlobe()
+      //.globeImageUrl('//unpkg.com/three-globe/example/img/earth-dark.jpg')
+	  .globeImageUrl('https://unpkg.com/three-globe@2.8.7/example/img/earth-blue-marble.jpg')
+      .bumpImageUrl('https://unpkg.com/three-globe@2.8.7/example/img/earth-topology.png')
+     // .pointsData(gData)
+     // .pointAltitude('size')
+     // .pointColor('color');
+	
+	/*
+    setTimeout(() => {
+      gData.forEach(d => d.size = Math.random());
+      Globe.pointsData(gData);
+    }, 4000);*/
+
+    // Setup renderer
+    const renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.getElementById('globeViz').appendChild(renderer.domElement);
+
+    // Setup scene
+    const scene = new THREE.Scene();
+	scene.background = new THREE.Color("#fff");
+    scene.add(Globe);
+
+   // scene.add(new THREE.AmbientLight(0xbbbbbb));
+    var amb_light = new THREE.AmbientLight("#ffc66b",1);
+    //var dir_light = new THREE.DirectionalLight("#ffa921", 0.6);
+	var dir_light = new THREE.DirectionalLight("#bdf5ff", 0.5);
+	var change_light = new THREE.AmbientLight("#ff2a00", 0);
+	//amb_light.castShadow = true;
+	scene.add(amb_light)
+	//scene.add(dir_light)
+	scene.add(change_light)
+	// light.color.setHex( 0xff0000 );
+
+    // Setup camera
+    const camera = new THREE.PerspectiveCamera();
+    camera.aspect = window.innerWidth/window.innerHeight;
+    camera.updateProjectionMatrix();
+    camera.position.z = 500;
+
+    // Add camera controls
+    const tbControls = new THREE.TrackballControls(camera, renderer.domElement);
+    tbControls.minDistance = 101;
+    tbControls.rotateSpeed = 5;
+    tbControls.zoomSpeed = 0.8;
+	
+	var it = 0;
+
+    // Kick-off renderer
+    (function animate() { // IIFE
+	  requestAnimationFrame(animate);
+      // Frame cycle
+      tbControls.update();
+	  Globe.rotation.x += 0.002;
+	  Globe.rotation.y += 0.002;
+	  //Globe.rotation.z += 0.01;
+	  if(it<1){
+		it = it + 0.003;
+	  }else if(it==1){
+		it = 0;
+	  }
+	  change_light.intensity = it;
+	  /*
+	  var h = rmapped * 0.01 % 1;
+      var s = 1;
+	  var l = 1;
+	  dir_light.color.setHSL(h,s,l);
+	  rmapped ++;*/
+
+      renderer.render(scene, camera);
+     
+    })();
+  </script>
+</body>
