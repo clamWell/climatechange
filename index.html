@@ -1,6 +1,7 @@
 <?php
 	$css = "css/style.css?" . filemtime("css/style.css");
 	$js = "js/custom.js?" . filemtime("js/custom.js");
+	$korTempDevi = "js/korTempData.js?" . filemtime("js/korTempData.js");
 ?>
 
 
@@ -247,7 +248,8 @@
 								<div id="threeJsGlobe"></div>
 							</div>
 							<div class="title-holder">
-								<div class="title-split">
+								<div class="title-split title-merge">
+									<!--
 									<p><img src="img/page-title-01.png" alt="기"></p>
 									<p><img src="img/page-title-02.png" alt="후"></p>
 									<p><img src="img/page-title-03.png" alt="변"></p>
@@ -255,7 +257,8 @@
 									<p><img src="img/page-title-05.png" alt="의"></p>
 									<p><img src="img/page-title-06.png" alt="증"></p>
 									<p><img src="img/page-title-07.png" alt="인"></p>
-									<p><img src="img/page-title-08.png" alt="들"></p>
+									<p><img src="img/page-title-08.png" alt="들"></p>-->
+									<p><img src="img/page-title-merged.png" alt="기후변화의 증인들"></p>
 								</div>
 							</div>
 
@@ -285,23 +288,86 @@
 
 						<div class="each-sec sec--01">
 							<div class="sec-title">
-								<p class="numb">1</p>
+								<p class="numb">0</p>
 								<p class="title">들어가며</p>
 								<p class="subtitle">변화를 직접 목격한 이들</p>
 							</div>
-
-							<div class="para-holder">
+						
+							<div class="para-holder para-docu">
 								<p>“지구온난화가 현재 속도로 지속된다면 2030년과 2052년 사이 지구 기온이 산업화 이전 수준과 비교해 1.5도가량 상승할 가능성이 높다. 많은 지역에서 극한 기온의 온난화, 일부 지역에서 호우 빈도와 강도의 증가, 일부 지역에서 가뭄 강도 또는 빈도의 증가 발생이 예상된다.”</p>
+							</div>
+							<div class="para-holder">
 								<p>기후변화에 관한 정부 간 협의체(IPCC)가 2018년 발표한 ‘지구온난화 1.5도 특별보고서’에 적힌 내용이다. 어렵게 쓰여 있지만 지구 기온 상승폭이 1.5도 이상이 될 경우 어떤 지역에서는 기온이 크게 오르고, 어떤 지역에서는 비가 매우 많이 내리게 되는 한편, 또 다른 지역에서는 가뭄이 더 심해진다는 경고다.</p>
 							</div>
 
+							<div class="graph-holder">
+								<div class="graph-svg">
+									<h3>한국 연평균 기온 편차 추이(단위: ℃)</h3>
+									<svg id="YEAR_DEVI_POLE_CHART">
+										<defs>
+											<linearGradient id="coldGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+											  <stop offset="0%" style="stop-color:rgb(188,223,240);stop-opacity:0.5" />
+											   <stop offset="100%" style="stop-color:rgb(108,197,241);stop-opacity:1" />
+											</linearGradient>
+											<linearGradient id="warmGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+											  <stop offset="0%" style="stop-color:rgb(255,102,39);stop-opacity:1" />
+											  <stop offset="100%" style="stop-color:rgb(255,113,27);stop-opacity:0.3" />
+											</linearGradient>
+										</defs>
+									</svg>
+									<div class="tooltip" id="TOOLTIP_YEAR_DEVI">
+										<div class="tooltip-con">
+											<p class="year"><span>1973</span>년</p>
+											<p class="temp_avr">연평균 기온 <span class="value">12</span>℃</p>
+											<p class="temp_devi">평년 대비 편차 <span class="value">1.5</span>℃</p>
+										</div>
+										<div class="close-btn">×</div>
+									</div>
+
+								</div>
+								<p class="caption"><strong>출처: 기상청 기상연보</strong>연평균 편차는 1973년부터 2019년까지 50년간 평균 기온 12.53도 대비 해당 연도의 평균 기온 편차를 의미한다. 2019년도의 전국 평균기온은 13.5℃로 최근 10년(2010~2019년) 평균보다 0.5℃ 높았고, 평년(1981~2010년)보다 1.0℃ 높았다. 이는 1973년 이래(45년간) 최고 2위에 해당하는 값이다.</p>
+							</div>
+
 							<div class="para-holder">
-								<p>기후변화가 심각하다는 사실을 부인하는 이들은 드물다. 하지만 기후변화가 당장 ‘나의 구체적 일상’을 바꿀 것이라는 위기감을 느끼는 이들 또한 드물다. 때마다 발표되는 온실가스 배출량 수치, 수온 상승폭 같은 데이터를 앞세운 국내외 보고서들은 이해하기가 쉽지 않다. 날씨가 예전보다 덥거나 추워졌다고 느낄 때가 있긴 하지만 이것을 ‘기후변화’와 선뜻 연결 짓긴 어렵다. 그렇게 기후변화는 낯설진 않지만 ‘아직은 나의 일은 아닌 일’이 된다.</p>
+								<p>기후변화가 심각하다는 사실을 부인하는 이들은 드물다. 하지만 기후변화가 당장 ‘나의 구체적 일상’을 바꿀 것이라는 위기감을 느끼는 이들 또한 드물다.</p>
+								<p>때마다 발표되는 온실가스 배출량 수치, 수온 상승폭 같은 데이터를 앞세운 국내외 보고서들은 이해하기가 쉽지 않다. 날씨가 예전보다 덥거나 추워졌다고 느낄 때가 있긴 하지만 이것을 ‘기후변화’와 선뜻 연결 짓긴 어렵다. 그렇게 기후변화는 낯설진 않지만 ‘아직은 나의 일은 아닌 일’이 된다.</p>
 								<p>경향신문은 지난 4월부터 자신의 일터와 삶에서 기후변화에 의한 것으로 추정되는 ‘변화’를 직접 목격한 이들, 즉 ‘기후변화의 증인들’을 만났다. 이들은 “나는 전문가는 아니지만, 기후변화에 대해 잘 모르지만”이라는 전제를 달고 자신의 경험을 이야기했다. </p>
 								<p>각종 보고서상의 ‘숫자’로 존재하던 것들이 이들에겐 지금 눈앞에서 벌어지는 위기이자 현실이었다.</p>
 							</div>
 
 						</div>
+
+						<div class="each-sec sec--02">
+							<div class="sec-title sec-title-artic">
+								<p class="numb"><img src="img/section-title-numb-01.png" alt="01"></p>
+								<p class="title"><img src="img/section-title-text-01.png" alt="바다"></p>
+								<p class="subtitle">해삼, 멍게, 전복 실종사건의 전말</p>
+							</div>
+							
+							<div class="sec-title-mask">
+								<div class="masking-area">
+									<div class="mask-back">
+										<img src="img/earth-blue-marble-sm.jpg" alt="">
+									</div>
+									<svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" class="titleMask">
+										<defs>
+											<mask id="mask" x="0" y="0" width="100%" height="100%" >
+												<rect x="0" y="0" width="100%" height="100%" />
+												<text x="72" y="400">01</text>
+												<text x="72" y="400">바다</text>
+											</mask>
+										</defs>
+										<rect x="0" y="0" width="100%" height="100%" />
+									</svg>
+								</div>
+							</div>
+
+							<div class="para-holder">
+								<p>제주 해녀 김혜숙씨(61)는 중학생 때인 15살에 처음 물질을 배웠다. 17살에는 해녀가 직업이 됐다. 그는 제주도 옆의 작은 섬, 우도에서 나고 자랐지만 충청도와 전라도 앞바다까지 가리지 않고 물질을 했다.</p>
+								<p>45년이 흘렀다. 그동안 김씨의 작업 방식이나 장비는 크게 변하지 않았다. 하나 바뀐 것이 있다면 김씨의 일터, 바닷속의 상황이다.</p>
+							</div>
+
+			
 					</div>
 
 					<div class="pc-share">
@@ -309,9 +375,6 @@
 							<div class="share_fb"><a onclick="sendSns('facebook'); return false;"><img src="http://img.khan.co.kr/spko/storytelling/2019/factory/fb_icon_line.png" alt="페이스북" /></a></div>
 							<div class="share_tw"><a onclick="sendSns('twitter'); return false;"><img src="http://img.khan.co.kr/spko/storytelling/2019/factory/tw_icon_line.png" alt="트위터" /></a></div>
 						</div>
-					</div>
-					<div class="refer">
-						<p><span>※ 사진 출처</span>경향신문 DB, 아름다운재단</p>
 					</div>
 
 				</div>
@@ -501,8 +564,9 @@
 		<!--// After Loading (E)-->
 	</div>
 	<script type="text/javascript" src="<?php echo $js; ?>"></script>
+	<script type="text/javascript" src="<?php echo $korTempDevi; ?>"></script>
  
-	<!-- imp 2020.04 YJ 추가-->
+	<!-- imp 2020.08 YJ 추가-->
 	 <SCRIPT type="text/javaSCRIPT">
 		 document.write('<img src="//ad.khan.co.kr/imp/khan_imp.php?dp=015111" width="0" height="0" style="display: none;" alt="img" />');
 		 document.write('<img src="//ad.khan.co.kr/artCnt/khanArt_cnt.php?artid=202006170652011&code=940100&mode=khan" width="0" height="0" style="display: none;" />');

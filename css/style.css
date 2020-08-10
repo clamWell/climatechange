@@ -151,7 +151,7 @@ box-sizing: border-box;  padding: 10px; background: #ececf1;  border-radius: 4px
 /* common */
 
 /* common_header */
-.common_header {  width: 100%;  position: relative;  box-shadow: 0px 0px 20px rgba(102, 103, 107, 0.15); border-bottom: 1px solid #cdd1d6;   z-index: 1;background: #fff;}
+.common_header {  width: 100%;  position: relative; position:absolute; top:-160px; box-shadow: 0px 0px 20px rgba(102, 103, 107, 0.15); border-bottom: 1px solid #cdd1d6;   z-index: 1;background: #fff;}
 .common_header .top_area_holder{ width: 100%;  height: 30px; background: #f5f5f5; }
 .common_header .top_area {  width: 1050px; margin: 0 auto; height: 30px;  line-height: 29px; overflow: hidden; font-size: 12px;}
 .common_header .top_area .family_site {  float: left;margin: 0;}
@@ -184,6 +184,9 @@ width: 27px; height: 30px;}
 .wrap { width:100%;  position: relative;  }
 .container {  width:100%; position: relative; overflow: hidden;}
 
+.story-header { background:#111; box-sizing:border-box; padding-top: 120px;}
+
+
 .3d-globe { width: 100%; background:#111; }
 .story-top-feature { width: 100%; background:#111;}
 .story-top-graphic { width: 100%; position: relative; }
@@ -194,11 +197,13 @@ width: 27px; height: 30px;}
 .title-holder .title-split { width:100%;   max-width: 600px;margin: 0 auto;}
 .title-holder .title-split p { display:inline-block;text-align:center;  }
 .title-holder .title-split p img { height:70px; }
+.title-holder .title-merge { max-width: 700px; }
+.title-holder .title-merge p img { height:auto; width:100%;  }
 
-.top-byline {     margin: 20px auto;}
+.top-byline {  margin: 20px auto; color:#fff; opacity:0.7;}
 .top-byline .top-border p { font-family: 'Noto Sans KR'; font-size: 14px; line-height:21px;text-align: center; }
 .top-byline .top-border p strong { margin: 0px 5px; }
-.top-byline .top-border p a {color:#111;}
+.top-byline .top-border p a {color:#111; color:#fff; }
 .top-byline .top-border p a:hover {text-decoration: underline;}
 .pc-share {  width: 95px; margin: 0 auto; }
 .pc-share .share_bx { }
@@ -217,12 +222,59 @@ font-size: 50px;  line-height: 55px; color: #111; font-weight: 600; color: #d296
 .each-sec .sec-title .subtitle {font-family: 'Noto Serif KR', 'notokr-regular', serif;color: #111; text-align: center;font-size: 24px;font-weight:bold;}
 .each-sec .sec-title {  position: relative;margin-bottom: 50px;}
 
+.each-sec .sec-title-artic {  padding: 100px 0;}
+.each-sec .sec-title-artic .numb { margin: 15px auto; }
+.each-sec .sec-title-artic .numb img {}
+.each-sec .sec-title-artic .title { margin-bottom:50px; }
+.each-sec .sec-title-artic .title img {}
+.each-sec .sec-title-artic .subtitle { font-size: 36px;font-weight: normal;word-spacing: -0.1em;}
+
+.sec-title-mask {position: relative;}
+.masking-area {position: relative;width: 100%; height: 500px; overflow: hidden; } 
+
+.sec-title-mask .mask-back {}
+.sec-title-mask .mask-back img {}
+svg.titleMask {  width: 100%; position:absolute;top: 0;left: 0;height: 100%;}
+svg.titleMask text {font-weight: 700; text-transform: uppercase;font-size: 300px;}
+svg.titleMask rect { fill: #fff;}
+svg.titleMask > rect { -webkit-mask: url(#mask); mask: url(#mask);}
+
 .para-holder { margin: 70px auto;font-family: 'Noto Serif KR',  'notokr-regular'; }
-.para-holder p {font-size: 20px;  max-width: 600px; text-align: left; color: #222; margin: 20px auto; 
+.para-holder p {font-size: 20px;  max-width: 550px; text-align: left; color: #222; margin: 20px auto; 
 line-height: 1.7; letter-spacing: -0.3px;  }
 .para-holder p span.semi { font-size: 16px; opacity:0.85; }
 .para-holder p.sm {   font-size: 16px; opacity: 0.85;}
 
+.para-docu p {font-weight: bold;font-family: 'Noto Sans KR'; font-style: italic; max-width: 500px; }
+
+.graph-holder { margin: 100px auto;  width:100%; }
+.graph-svg { max-width: 1200px; margin: 0 auto; position: relative;}
+.graph-svg h3 { text-align: center; margin-bottom: 30px; color: #1d1d1d; }
+.graph-svg svg { display:block; margin: 50px auto; margin-bottom: 80px;  overflow: visible;}
+#YEAR_DEVI_POLE_CHART .axis .domain { stroke: #fff;stroke-width: 0; }
+#YEAR_DEVI_POLE_CHART .tick {}
+#YEAR_DEVI_POLE_CHART .tick line {stroke-opacity: 0.3;}
+#YEAR_DEVI_POLE_CHART .tick text { font-family: 'Noto Sans KR', 'notokr-regular', 'Apple SD Gothic Neo','맑은 고딕';
+font-size: 12px;fill: #3a3f44;fill-opacity: 0.8;}
+#YEAR_DEVI_POLE_CHART .x .tick text { font-size: 14px; font-weight:bold; }
+#YEAR_DEVI_POLE_CHART .x .tick line { display:none; }
+#YEAR_DEVI_POLE_CHART .pole {  cursor: pointer; fill-opacity:1; }
+
+.graph-holder .caption { text-align: left; margin: 20px auto; max-width: 600px; font-size: 14px; color: #595f65; opacity: 0.8;}
+.graph-holder .caption strong {display:block; font-weight:bold;  } 
+.graph-svg .pole-label { fill-opacity: 0.5; font-size: 11px;font-weight: bold;color: #555;stroke: white; stroke-width: 1.5px; paint-order: stroke fill; text-anchor: middle;}
+
+.graph-svg .tooltip {opacity:0; position: absolute; background:#fff; text-align: left; padding:10px;
+border: 1px solid #ddd; z-index: 2;  font-family: 'Noto Sans KR', 'notokr-regular', 'Apple SD Gothic Neo','맑은 고딕'; min-width: 180px; } 
+.graph-svg .tooltip p {font-size:13px; line-height:1.45; }
+.graph-svg .tooltip .year { font-weight:bold; color:#111; }
+.graph-svg .tooltip .temp_avr { }
+.graph-svg .tooltip .temp_devi { }
+.graph-svg .tooltip .temp_devi span { font-weight:bold; }
+.graph-svg .tooltip .temp_devi .value-warm { color:#ff7108; }
+.graph-svg .tooltip .temp_devi .value-cold { color:#247cff;}
+.graph-svg .tooltip .close-btn { position: absolute; color: #222;
+ top: 5px; cursor: pointer; right: 10px; opacity: 0.7; font-size: 28px; line-height: 28px; display:none; }
 
 
 /** fixed Navi **/
@@ -230,7 +282,7 @@ line-height: 1.7; letter-spacing: -0.3px;  }
 font-family: 'Noto Sans KR', 'notokr-regular', 'Apple SD Gothic Neo','맑은 고딕'; z-index: 1;}
 .fixed-navi .navi-body { height: 500px;}
 .fixed-navi .navi-body .bar { height:100%; width:2px; background:#fff; background: rgba(0,0,0,0.2); position: relative; }
-.fixed-navi .navi-body .bar .progress { position: absolute; background: #1a2fff;  width:100%; height: 0%; top:0px; left:0px; }
+.fixed-navi .navi-body .bar .progress { position: absolute; background: #d2964c; width:100%; height: 0%; top:0px; left:0px; }
 .fixed-navi .navi-body .bar .step-txt { position: absolute; top:0px; right:0px; width: 130px;  height: 100%; text-align: right; box-sizing: border-box; padding-right: 20px; }
 .fixed-navi .navi-body .bar .step-txt p {  font-size: 11px;line-height: 20px; color:#111;  text-shadow: 1px 1px 1px #fff;opacity: 0.8;  
  position: absolute; right: 10px; letter-spacing: 0;  font-weight: bold;}
