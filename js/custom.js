@@ -280,8 +280,19 @@ $(function(){
 	var showHeader = function() {
 		$(".common_header").delay(500).animate({"top": "0px"}, 1000, "swing");
 	}
+	function activataTw(){
+		$("#TT_HOLDER_01").twentytwenty();
+		$("#TT_HOLDER_02").twentytwenty();
+	};
+
+	
+	$(".twentytwenty-container").on("mousedown", function(){
+		$(this).parent("div").siblings(".click-animation").fadeOut();
+	});
+
 	function init(){
 		showHeader();
+		activataTw();
 	}
 
 	$(".loading-page").fadeOut(200, function(){
