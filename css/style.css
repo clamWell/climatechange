@@ -270,6 +270,7 @@ svg.titleMask > rect { -webkit-mask: url(#mask); mask: url(#mask);}
 line-height: 1.7; letter-spacing: -0.3px;  }
 .para-holder p span.semi { font-size: 16px; opacity:0.85; }
 .para-holder p.sm {   font-size: 16px; opacity: 0.85;}
+.para-holder p.strong { font-weight:bold;}
 
 .para-docu p {font-weight: bold;font-family: 'Noto Sans KR'; font-style: italic; max-width: 500px; }
 
@@ -310,7 +311,7 @@ border: 1px solid #ddd; z-index: 2;  font-family: 'Noto Sans KR', 'notokr-regula
 .graph-caption { margin-top: 10px; font-family: 'Noto Sans KR';}
 .graph-caption p { text-align: center; font-size: 14px; color:#444; }
 
-.graph--01 img { position: relative; left: 50px;}
+.graph--01 img { position: relative; }
 .graph--01 {}
 .graph--02 {  margin-top: 30px;}
 .graph--02 img {  display: block;  margin: 0 auto;position: relative; left: 50px;}
@@ -335,6 +336,11 @@ h4.m-title { margin: 40px auto; font-weight: bold;text-align: center;  font-size
 .interviewee-holder-col-2 { position: relative; }
 .interviewee-holder-col-2 > .col { float:left; width: 50%; box-sizing: border-box;}
 .interviewee-holder-col-2::after { clear:both; display:block; content:"";}
+
+.interviewee-holder-col-2-reverse > .col { float:right; }
+.interviewee-holder-col-2-reverse .thumb  { padding-right: 0; padding-left: 50px;}
+.interviewee-holder-col-2-reverse .interview-text { }
+.interviewee-holder-col-2-reverse .interview-text p { text-align: right;}
 
 #ASIA_OCEAN_MAP { display:none;}
 
