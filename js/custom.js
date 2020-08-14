@@ -242,6 +242,152 @@ $(function(){
 
 	/******** 도입부 평년 기온차 선 그래프********/
 
+	/******** 최근 10년 산불 발생 현황 선, 막대 그래프********/
+	function curFireLInePole(){
+		var data=[{year:"2010",occu:"282",ha:"297"},{year:"2011",occu:"277",ha:"1090"},{year:"2012",occu:"197",ha:"72"},{year:"2013",occu:"296",ha:"552"},{year:"2014",occu:"492",ha:"137"},{year:"2015",occu:"623",ha:"418"},{year:"2016",occu:"391",ha:"378"},{year:"2017",occu:"692",ha:"1480"},{year:"2018",occu:"496",ha:"894"},{year:"2019",occu:"653",ha:"3255"}];
+		
+		var	width =  ((isMobile==true)? (screenWidth-120) : 650),
+			height = 350,
+			margin = 10,
+			poleMargin = 2;
+			poleWidth = ((width-margin) / data.length)-poleMargin;
+	
+		var haMax = d3.max(data, function(d){ return Number(d["ha"]); }); 
+		var occuMax = d3.max(data, function(d){ return Number(d["occu"]); }); 
+		var multipleKey = [ height/haMax, height/occuMax];
+
+		var chart_svg = d3.select("#CURRENT_FIRE_LINE_POLE");
+		chart_svg.attr("width", width +"px" )
+				.attr("height", height +"px");
+
+		var pole_chart_holder = chart_svg.append("g")
+				.attr("class","pole_chart_holder");
+		var line_chart_holder = chart_svg.append("g")
+				.attr("class","line_chart_holder");
+
+		var x = d3.scaleBand()
+			.domain(data.map(function(d){ return d.year; }) )
+			.range([0, width]);
+
+		chart_svg.append("g")
+		  .attr("class", "x axis")
+		  .attr("transform", "translate(0,"+ (height+10)+")")
+		  .call( d3.axisBottom(x))
+		
+		d3.selectAll("#CURRENT_FIRE_LINE_POLE .x .tick")
+			.filter(function(d){ return d.year === "2019"})
+			.classed("tick-strong", true);
+
+		var y_ha = d3.scaleLinear()
+			.domain([0, haMax])
+			.rangeRound([height, 0])
+
+		chart_svg.append("g")
+		  .attr("class", "y axis axis-ha")
+		  .attr("transform", "translate("+(width)+",0)")
+		  .call(d3.axisRight(y_ha).ticks(5));
+
+		var y_occu = d3.scaleLinear()
+			.domain([0, occuMax])
+			.rangeRound([height, 0])
+
+		chart_svg.append("g")
+		  .attr("class", "y axis axis-occu")
+		  .attr("transform", "translate(-10,0)")
+		  .call(d3.axisLeft(y_occu).ticks(5));
+
+		var pole_g = pole_chart_holder.selectAll("g")
+				.data(data)
+				.enter().append("g")
+				.attr("class","pole-g")
+				.attr("transform", function(d, i) {
+					var transX = ( i * (poleWidth  + poleMargin) );
+					return "translate("+ transX +",0)";}
+				 );
+
+		pole_g.append("rect")
+				.style("fill", function(d) {
+					return "url(#warmGrad)";
+				})
+				.attr("width", poleWidth)
+				.attr("class", "pole pole-each-ha")
+				.attr("height", function(d){
+					var h = d.ha * multipleKey[0];
+					return h;
+				}).attr("x", function(d, i) {
+					return 0;
+				}).attr("y", function(d) {
+					var h = d.ha *  multipleKey[0];
+					return height-h;
+				});
+
+		pole_g.append("text")
+				.attr("class","pole-label")
+				.text(function(d) { return d.ha; })
+				.attr("transform", function(d){ 
+					var h = d.ha *  multipleKey[0];
+					return "translate("+poleWidth/2+","+(height-h+15) +")";
+				})
+
+		chart_svg.append("text")
+			.attr("class", "y-label-ha")
+			.attr("transform", "translate("+ (width) +",0)")
+			.text("면적(ha)")
+
+		var line = d3.line()
+			.x(function(d){ return (x(d.year) + x.bandwidth()/2); })
+			.y(function(d){ return y_occu(d.occu); } )
+
+		line_chart_holder.append("path")
+		  .attr("fill", "none")
+		  .attr("class", "line-path")
+		  .attr("d", line(data));
+
+		chart_svg.append("text")
+			.attr("class", "y-label-occu")
+			.attr("transform", "translate(-50,0)")
+			.text("발생건수(건)")
+
+		dotHolder = line_chart_holder.selectAll("g.dot-holder")
+				.data(data)
+			  .enter().append("g")
+				.attr("class", "dot-holder")
+				.attr("transform", function(d){ return "translate("+(x(d.year) + x.bandwidth()/2)+","+y_occu(d.occu)+")"; })
+
+		var dot = dotHolder.append("circle") 
+				.attr("class", "dot") 
+				.attr("r", 4);
+
+		var dotLabel = dotHolder.append("text") 
+			.attr("class","dot-label")
+			.attr("transform","translate(0, -10)")
+			.text(function(d) { return d.occu+"건"; });
+
+		dot.on("mouseover", function(d){
+			d3.select(this)
+				.style("stroke-width", "3")
+				.style("r", 5)
+				.style("fill", "#111")
+			d3.select(this.parentNode).select(".dot-label")
+				.style("opacity",1)
+			d3.select(".pole_chart_holder")
+				.style("opacity", 0.3)
+		}).on("mouseout", function(d){
+			d3.select(this)
+				.style("stroke-width", null)
+				.style("r", null)
+				.style("fill", null)
+			d3.select(this.parentNode).select(".dot-label")
+				.style("opacity",0)
+			d3.select(".pole_chart_holder")
+				.style("opacity", null)
+		})
+
+
+	}
+	curFireLInePole();
+	/******** 최근 10년 산불 발생 현황 선, 막대 그래프********/
+
 	/********progress********/
 	var progressBar = {
 		progressStatus : false,

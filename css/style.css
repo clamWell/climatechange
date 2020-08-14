@@ -278,11 +278,10 @@ line-height: 1.7; letter-spacing: -0.3px;  }
 .graph-svg { max-width: 1200px; margin: 0 auto; position: relative;}
 .graph-svg h3 { text-align: center; margin-bottom: 30px; color: #1d1d1d; }
 .graph-svg svg { display:block; margin: 50px auto; margin-bottom: 80px;  overflow: visible;}
-#YEAR_DEVI_POLE_CHART .axis .domain { stroke: #fff;stroke-width: 0; }
-#YEAR_DEVI_POLE_CHART .tick {}
-#YEAR_DEVI_POLE_CHART .tick line {stroke-opacity: 0.3;}
-#YEAR_DEVI_POLE_CHART .tick text { font-family: 'Noto Sans KR', 'notokr-regular', 'Apple SD Gothic Neo','맑은 고딕';
-font-size: 12px;fill: #3a3f44;fill-opacity: 0.8;}
+.axis .domain { stroke: #fff;stroke-width: 0; }
+.tick {}
+.tick line {stroke-opacity: 0.3;}
+.tick text { font-family: 'Noto Sans KR', 'notokr-regular', 'Apple SD Gothic Neo','맑은 고딕'; font-size: 12px;fill: #3a3f44;fill-opacity: 0.8;}
 #YEAR_DEVI_POLE_CHART .x .tick text { font-size: 14px; font-weight:bold; }
 #YEAR_DEVI_POLE_CHART .x .tick line { display:none; }
 #YEAR_DEVI_POLE_CHART .pole {  cursor: pointer; fill-opacity:1; }
@@ -354,6 +353,28 @@ h4.m-title { margin: 40px auto; font-weight: bold;text-align: center;  font-size
 .tree-legend .b02 { background:#76b22c; }
 .tree-legend .b03 { background:#269a34; }
 .tree-legend .b04 { background:#173c1c; }
+
+.dry-legend {margin: 15px auto; max-width: 500px; }
+.dry-legend p { text-align: center;font-size: 14px; line-height: 1.5; }
+.dry-legend p span { display: inline;vertical-align: middle;  }
+.dry-legend p .block { width: 15px; height: 15px; display: inline-block;  }
+.dry-legend p .txt { color:#111;  margin-left: 5px;font-weight: bold;opacity: 0.8; margin-right: 15px; }
+.dry-legend p .b01 { background:#ff4200; }
+.dry-legend p .b02 { background:#4c5d70; border-radius: 50%; }
+
+#CURRENT_FIRE_LINE_POLE .x .tick text { font-size: 12px; }
+#CURRENT_FIRE_LINE_POLE .x .tick line { display:none; }
+#CURRENT_FIRE_LINE_POLE .x .tick.tick-strong { font-size: 15px;  font-weight:bold;}
+#CURRENT_FIRE_LINE_POLE .y .tick text { font-size: 13px;  }
+#CURRENT_FIRE_LINE_POLE .axis-ha .tick text {  fill: #ff4d00;}
+#CURRENT_FIRE_LINE_POLE .axis-ha .tick line {  fill: #ff4d00; stroke: #ff4d00; }
+#CURRENT_FIRE_LINE_POLE .line-path { stroke: #333; stroke-width: 2; }
+.y-label-occu {font-size: 14px; font-weight: bold; fill: #3a3f44; }
+.y-label-ha { font-size: 14px; font-weight: bold; fill: #ff682a; }
+#CURRENT_FIRE_LINE_POLE .pole-label {  fill-opacity: 0.85;font-size: 12px;font-weight: normal;color: #fff;stroke: #ea4700;stroke-width: 2px; 
+paint-order: stroke fill; text-anchor: middle; fill: #fff;}
+#CURRENT_FIRE_LINE_POLE .dot-label { opacity: 0; font-size: 12px;font-weight: bold;  text-anchor: middle; fill: #333333;stroke:#fff;paint-order: stroke fill;   }
+#CURRENT_FIRE_LINE_POLE .dot { fill: #585454; fill-opacity: 1; stroke: #dedede; stroke-opacity: 1;stroke-width: 1;}
 
 .img-holder-slider {   padding: 50px 0; box-sizing: border-box; width: 100%;background: #e8ebec;}
 .img-holder-slider .img-des { text-align: center;margin-bottom: 10px; font-size: 17px; font-weight: bold;color: #394254;color:#222;}
