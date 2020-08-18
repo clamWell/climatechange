@@ -36,7 +36,7 @@ $(function(){
 
 		var geometry = new THREE.SphereGeometry( 0.5, 32, 32 );
 		var material =new THREE.MeshPhongMaterial({
-			map: THREE.ImageUtils.loadTexture('img/earth-blue-marble-sm.jpg'),
+			map: THREE.ImageUtils.loadTexture('img/earth-blue-marble-low.jpg'),
 			//bumpMap: THREE.ImageUtils.loadTexture('img/earth-topology.jpg'),
 			//bumpScale: 0.005,
 		  })
@@ -382,8 +382,6 @@ $(function(){
 			d3.select(".pole_chart_holder")
 				.style("opacity", null)
 		})
-
-
 	}
 	curFireLInePole();
 	/******** 최근 10년 산불 발생 현황 선, 막대 그래프********/
@@ -424,7 +422,7 @@ $(function(){
 	}
 	/******** 모바일 전용 조정 ********/
 	var showHeader = function() {
-		$(".common_header").delay(500).animate({"top": "0px"}, 1000, "swing");
+		$(".common_header").delay(1800).animate({"top": "0px"}, 1500, "swing");
 	}
 	function activataTw(){
 		$("#TT_HOLDER_01").twentytwenty();
@@ -436,15 +434,45 @@ $(function(){
 		$(this).parent("div").siblings(".click-animation").fadeOut();
 	});
 
+	function introAnimation(){
+		var $introItem = $(".intro-fadeTo");
+		//$(".story-top-graphic .cover-shadow").animate({"opacity":"0.2"},2000);
+		for(o=0; o<$introItem.length;o++){
+			$introItem.eq(o).delay(o*200).animate({"opacity":"1", "top":"0px"}, 1000, "easeOutSine");
+			if(o == $introItem.length-1){
+				showHeader();
+			}
+		};
+	}
+
+	var pathWidthArr = [];
+	$(".sec-title-artic .path").each(function(i){
+		var pathWidth = $(this).find("img").width();
+		pathWidthArr.push(pathWidth);
+	});
+
+	function sectionTitleAnimation(i){
+		console.log(i+"번째 섹션 타이틀 애니메이션");
+		var $stItem = $(".sec-title").eq(i).find("p");
+		for(s=0; s<$stItem.length;s++){
+			$stItem.eq(s).delay(s*400).animate({"opacity":"1", "top":"0px"}, 1000, "easeOutSine");
+		}
+		if(i>0){
+			 $(".sec-title").eq(i).find(".path").animate({"width":pathWidthArr[i-1]}, 2000, "easeOutSine");
+		}
+		
+	};	
+
 	function init(){
-		showHeader();
 		activataTw();
+		introAnimation();
 	}
 
 	$(".loading-page").fadeOut(200, function(){
 		init();
 	});
 
+	var st_ani_done = [false, false, false, false, false, false];
 
 	$(window).scroll(function(){
 		var nowScroll = $(window).scrollTop();
@@ -457,6 +485,13 @@ $(function(){
 			}
 		});
 
+		$(".sec-title").each(function(i){
+			if( nowScroll + screenHeight > $(this).offset().top + $(this).outerHeight()*0.5 && st_ani_done[i] !== true ){
+				st_ani_done[i] = true;
+				sectionTitleAnimation(i);
+					
+			}
+		});
 
 	});
 
