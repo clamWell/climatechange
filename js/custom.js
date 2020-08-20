@@ -99,8 +99,8 @@ $(function(){
 	/******** 도입부 평년 기온차 선 그래프********/
 	function korTempPoleGraph(){
 		var data = koreaTempDevi,
-			width =  ((isMobile==true)? (screenWidth-120) : 900),
-			height = 500,
+			width =  ((isMobile==true)? (screenWidth-60) : 900),
+			height = ((isMobile==true)? 400: 500),
 			margin = 10,
 			poleMargin = 2;
 			poleWidth = ((width-margin) / data.length)-poleMargin;
@@ -112,7 +112,7 @@ $(function(){
 
 		var maxValue = d3.max(devi_val);
 		var minValue = d3.min(devi_val);
-		console.log("편차 max값은: "+ maxValue +" / 편차 min값은: "+minValue);
+		//console.log("편차 max값은: "+ maxValue +" / 편차 min값은: "+minValue);
 
 		var chart_svg = d3.select("#YEAR_DEVI_POLE_CHART");
 		chart_svg.attr("width", width +"px" )
@@ -120,6 +120,7 @@ $(function(){
 
 		var chart_holder = chart_svg.append("g")
 				.attr("class","chart-holder");
+		if(isMobile==true){ chart_holder.attr("transform", "translate(15,0)");  }
 
 		var x = d3.scaleTime()
 				.range([0, width])
@@ -141,7 +142,7 @@ $(function(){
 
 		var pole_holder = chart_holder.append("g")
 		  .attr("class", "pole-holder")
-		  .attr("transform", "translate(0,"+ -280 +")")
+		  .attr("transform", "translate(0,"+ -(height/2+30) +")")
 
 		var pole_year_avr = pole_holder.selectAll("g")
 				.data(data)
@@ -222,8 +223,12 @@ $(function(){
 					}else if(d["deviation"]>=0){
 						$tooltip.find(".temp_devi .value").addClass("value-warm");
 					}
-					$tooltip.css({"left":(d3.mouse(this.parentNode)[0])+"px"});
-					$tooltip.css({"bottom":"-20px"});
+					
+					if(isMobile==false){
+						$tooltip.css({"left":(d3.mouse(this.parentNode)[0])+"px"});
+						$tooltip.css({"bottom":"-20px"});
+
+					}
 					$tooltip.css({"opacity":"1"})
 
 				}).on("mouseleave", function(d){
@@ -236,6 +241,15 @@ $(function(){
 						.style("fill-opacity", null)
 				});		
 
+		$(".all-city-household-chart .tooltip .close-btn").on("click", function(){
+			d3.selectAll("#YEAR_DEVI_POLE_CHART .pole")
+				.style("fill-opacity", null)
+				.style("stroke", null)
+				.style("stroke-width",  null)
+			$tooltip.css({"opacity":"0"})
+			d3.selectAll("#YEAR_DEVI_POLE_CHART .pole-label")
+				.style("fill-opacity", null)
+		});
 
 	}	
 	korTempPoleGraph();
@@ -246,11 +260,11 @@ $(function(){
 	function curFireLInePole(){
 		var data=[{year:"2010",occu:"282",ha:"297"},{year:"2011",occu:"277",ha:"1090"},{year:"2012",occu:"197",ha:"72"},{year:"2013",occu:"296",ha:"552"},{year:"2014",occu:"492",ha:"137"},{year:"2015",occu:"623",ha:"418"},{year:"2016",occu:"391",ha:"378"},{year:"2017",occu:"692",ha:"1480"},{year:"2018",occu:"496",ha:"894"},{year:"2019",occu:"653",ha:"3255"}];
 		
-		var	width =  ((isMobile==true)? (screenWidth-120) : 650),
-			height = 350,
+		var	width =  ((isMobile==true)? (screenWidth-80) : 650),
+			height = ((isMobile==true)? 300: 350),
 			margin = 10,
 			poleMargin = 2;
-			poleWidth = ((width-margin) / data.length)-poleMargin;
+			poleWidth = ((width) / data.length)-poleMargin;
 	
 		var haMax = d3.max(data, function(d){ return Number(d["ha"]); }); 
 		var occuMax = d3.max(data, function(d){ return Number(d["occu"]); }); 
@@ -291,10 +305,12 @@ $(function(){
 			.domain([0, occuMax])
 			.rangeRound([height, 0])
 
-		chart_svg.append("g")
+		var yaxis = chart_svg.append("g")
 		  .attr("class", "y axis axis-occu")
 		  .attr("transform", "translate(-10,0)")
 		  .call(d3.axisLeft(y_occu).ticks(5));
+
+		if(isMobile==true){ yaxis.attr("transform", "translate(-5,0)") }
 
 		var pole_g = pole_chart_holder.selectAll("g")
 				.data(data)
@@ -331,7 +347,7 @@ $(function(){
 
 		chart_svg.append("text")
 			.attr("class", "y-label-ha")
-			.attr("transform", "translate("+ (width) +",0)")
+			.attr("transform", "translate("+ ((width)-5) +",0)")
 			.text("면적(ha)")
 
 		var line = d3.line()
@@ -345,7 +361,7 @@ $(function(){
 
 		chart_svg.append("text")
 			.attr("class", "y-label-occu")
-			.attr("transform", "translate(-50,0)")
+			.attr("transform", "translate(-35,0)")
 			.text("발생건수(건)")
 
 		dotHolder = line_chart_holder.selectAll("g.dot-holder")
@@ -416,11 +432,58 @@ $(function(){
 	}
 	/********progress********/
 
-	/******** 모바일 전용 조정 ********/
+	/******** 섹션 타이틀 애니메이션 ********/  //추후 객체화 할 것
+	var st_ani_done = [false, false, false, false, false, false],
+		pathWidthArr = [];
+	$(".sec-title-artic .path").each(function(i){
+		var pathWidth = $(this).find("img").width();
+		pathWidthArr.push(pathWidth);
+	});
+	function sectionTitleAnimation(i){
+		console.log(i+"번째 섹션 타이틀 애니메이션");
+		var $stItem = $(".sec-title").eq(i).find("p");
+		for(s=0; s<$stItem.length;s++){
+			$stItem.eq(s).delay(s*400).animate({"opacity":"1", "top":"0px"}, 1000, "easeOutSine");
+		}
+		if(i>0){
+			 $(".sec-title").eq(i).find(".path").animate({"width":pathWidthArr[i-1]}, 2000, "easeOutSine");
+		}
+	};
+	
+	function setTitleConPos(){
+		$(".over-video").each(function(i){
+			$(this).css({"top": (($(".sec-title-with-video").eq(i).height()-$(this).height())/2-30)+"px"});
+		});
+	}
+	/******** 섹션 타이틀 애니메이션 ********/
+
+
+	/******** 모바일 전용 조정 ********/	
+	function changeSource(id, url) {
+	   var video = document.querySelector(id);
+	   var source = video.querySelector("source");
+	   video.src = url;
+	   video.play();
+	}
+
 	if(isMobile==true){
-		
+		$("#IMG_S01_01").find("img").attr("src","img/sec-00-seoul-climate-photo-bridge.jpg");
+		$("#IMG_S01_01").find(".caption").html("팔당, 소양강 댐 방류로 한강 수위가 높아지면서 8월 6일 서울 여의도 부근 올림픽대로 일부 구간이 침수돼 차량통행이 통제되고 있다.");
+		$("#IMG_S02_01").find("img").attr("src","img/sec-01-growh-photo-m.jpg");
+
+		changeSource("#V_JEJU", "video/jeju_title_m.mp4")
+		changeSource("#V_MOUNT", "video/tree_title_m.mp4")
+		changeSource("#V_FIRE", "video/fire_title_m.mp4")
+		changeSource("#V_GROUND", "video/jeju_title_m.mp4")
+	}else{
+		changeSource("#V_JEJU", "video/jeju_4k_title_video_final.mp4")
+		changeSource("#V_MOUNT", "video/tree_title_video.mp4")
+		changeSource("#V_FIRE", "video/video/fire_title_video_4.mp4.mp4")
+		changeSource("#V_GROUND", "video/ground_bee_title_video.mp4")
 	}
 	/******** 모바일 전용 조정 ********/
+
+
 	var showHeader = function() {
 		$(".common_header").delay(1800).animate({"top": "0px"}, 1500, "swing");
 	}
@@ -429,8 +492,10 @@ $(function(){
 		$("#TT_HOLDER_02").twentytwenty();
 	};
 
-	
 	$(".twentytwenty-container").on("mousedown", function(){
+		$(this).parent("div").siblings(".click-animation").fadeOut();
+	});
+	$(".twentytwenty-container").on("touch", function(){
 		$(this).parent("div").siblings(".click-animation").fadeOut();
 	});
 
@@ -445,34 +510,17 @@ $(function(){
 		};
 	}
 
-	var pathWidthArr = [];
-	$(".sec-title-artic .path").each(function(i){
-		var pathWidth = $(this).find("img").width();
-		pathWidthArr.push(pathWidth);
-	});
 
-	function sectionTitleAnimation(i){
-		console.log(i+"번째 섹션 타이틀 애니메이션");
-		var $stItem = $(".sec-title").eq(i).find("p");
-		for(s=0; s<$stItem.length;s++){
-			$stItem.eq(s).delay(s*400).animate({"opacity":"1", "top":"0px"}, 1000, "easeOutSine");
-		}
-		if(i>0){
-			 $(".sec-title").eq(i).find(".path").animate({"width":pathWidthArr[i-1]}, 2000, "easeOutSine");
-		}
-		
-	};	
 
 	function init(){
 		activataTw();
 		introAnimation();
+		setTitleConPos();
 	}
 
 	$(".loading-page").fadeOut(200, function(){
 		init();
 	});
-
-	var st_ani_done = [false, false, false, false, false, false];
 
 	$(window).scroll(function(){
 		var nowScroll = $(window).scrollTop();
@@ -480,7 +528,8 @@ $(function(){
 		progressBar.setProgress(nowScroll);
 	
 		$(".hideme").each(function(i){
-			if( nowScroll + screenHeight > $(this).offset().top + $(this).outerHeight()*0.5 ){
+			if( $(this).hasClass("shown") == false && nowScroll + screenHeight > $(this).offset().top + $(this).outerHeight()*0.5 ){
+				$(this).addClass("shown")
 				$(this).stop().animate({"opacity":"1"},500);
 			}
 		});
@@ -489,7 +538,6 @@ $(function(){
 			if( nowScroll + screenHeight > $(this).offset().top + $(this).outerHeight()*0.5 && st_ani_done[i] !== true ){
 				st_ani_done[i] = true;
 				sectionTitleAnimation(i);
-					
 			}
 		});
 
