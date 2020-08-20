@@ -43,14 +43,15 @@ $(function(){
 		var Globe = new THREE.Mesh( geometry, material );
 
 		// Setup renderer
-		const renderer = new THREE.WebGLRenderer();
-		const container = document.getElementById("threeJsGlobe");
-		const { width, height } = container.getBoundingClientRect();
+		var renderer = new THREE.WebGLRenderer();
+		var container = document.getElementById("threeJsGlobe");
+		var width = container.getBoundingClientRect().width,
+			height = container.getBoundingClientRect().height;
 		renderer.setSize(width, height);
 		container.appendChild(renderer.domElement);
 
 		// Setup scene
-		const scene = new THREE.Scene();
+		var scene = new THREE.Scene();
 		scene.background = new THREE.Color("#111");
 		scene.add(Globe);
 
@@ -65,7 +66,7 @@ $(function(){
 		scene.add(change_light)
 
 		// Setup camera
-		const camera = new THREE.PerspectiveCamera();
+		var camera = new THREE.PerspectiveCamera();
 		camera.aspect = width/height;
 		camera.updateProjectionMatrix();
 		camera.position.z = 1.8;
@@ -470,6 +471,7 @@ $(function(){
 		$("#IMG_S01_01").find("img").attr("src","img/sec-00-seoul-climate-photo-bridge.jpg");
 		$("#IMG_S01_01").find(".caption").html("팔당, 소양강 댐 방류로 한강 수위가 높아지면서 8월 6일 서울 여의도 부근 올림픽대로 일부 구간이 침수돼 차량통행이 통제되고 있다.");
 		$("#IMG_S02_01").find("img").attr("src","img/sec-01-growh-photo-m.jpg");
+		$("#IMG_S05_01").find("img").attr("src","img/fire-aust-mobile.jpg");
 
 		changeSource("#V_JEJU", "video/jeju_title_m.mp4")
 		changeSource("#V_MOUNT", "video/tree_title_m.mp4")
@@ -478,7 +480,7 @@ $(function(){
 	}else{
 		changeSource("#V_JEJU", "video/jeju_4k_title_video_final.mp4")
 		changeSource("#V_MOUNT", "video/tree_title_video.mp4")
-		changeSource("#V_FIRE", "video/video/fire_title_video_4.mp4.mp4")
+		changeSource("#V_FIRE", "video/fire_title_video_4.mp4")
 		changeSource("#V_GROUND", "video/ground_bee_title_video.mp4")
 	}
 	/******** 모바일 전용 조정 ********/
