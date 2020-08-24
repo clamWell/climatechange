@@ -31,6 +31,19 @@ $(function(){
 		}
 	}
 
+    var ieUnder = false;
+    function checkIe(){ 
+        var word; 
+        if (navigator.userAgent.indexOf("MSIE") >= 0) {
+            console.log("ieUNDER 10");
+            ieUnder = true;
+            return true;
+        }else {
+            return false;
+        }
+    } 
+    checkIe();
+
 	/******** three.js 글로브 ********/
 	function makeThreeGlobe(){
 
@@ -94,7 +107,13 @@ $(function(){
 		})();
 	
 	}
-    makeThreeGlobe();
+    if( checkIe() == false){
+         makeThreeGlobe();
+    }else{
+        $("#threeJsGlobe").html("");
+        $("#threeJsGlobe").hide();
+        $(".3d-globe").append("<div class='globeIE'></div>")
+    }
 	/******** three.js 글로브 ********/
 
 	/******** 도입부 평년 기온차 선 그래프********/
@@ -377,28 +396,42 @@ $(function(){
 
 		var dotLabel = dotHolder.append("text") 
 			.attr("class","dot-label")
-			.attr("transform","translate(0, -10)")
+			.attr("transform", function(d,i){ 
+				if(i==9&&isMobile==true){
+					return "translate(0, 15)";
+				}else{
+					if(isMobile==true){
+						return "translate(0, -7)"
+					}else{
+						return "translate(0, -10)";
+					}
+				}
+			 })
 			.text(function(d) { return d.occu+"건"; });
 
-		dot.on("mouseover", function(d){
-			d3.select(this)
-				.style("stroke-width", "3")
-				.style("r", 5)
-				.style("fill", "#111")
-			d3.select(this.parentNode).select(".dot-label")
-				.style("opacity",1)
-			d3.select(".pole_chart_holder")
-				.style("opacity", 0.3)
-		}).on("mouseout", function(d){
-			d3.select(this)
-				.style("stroke-width", null)
-				.style("r", null)
-				.style("fill", null)
-			d3.select(this.parentNode).select(".dot-label")
-				.style("opacity",0)
-			d3.select(".pole_chart_holder")
-				.style("opacity", null)
-		})
+        if(isMobile==false){
+            dot.on("mouseover", function(d){
+                d3.select(this)
+                    .style("stroke-width", "3")
+                    .style("r", 5)
+                    .style("fill", "#111")
+                d3.select(this.parentNode).select(".dot-label")
+                    .style("opacity",1)
+                d3.select(".pole_chart_holder")
+                    .style("opacity", 0.3)
+            }).on("mouseout", function(d){
+                d3.select(this)
+                    .style("stroke-width", null)
+                    .style("r", null)
+                    .style("fill", null)
+                d3.select(this.parentNode).select(".dot-label")
+                    .style("opacity",0)
+                d3.select(".pole_chart_holder")
+                    .style("opacity", null)
+            })
+
+        }
+		
 	}
 	curFireLInePole();
 	/******** 최근 10년 산불 발생 현황 선, 막대 그래프********/
@@ -463,25 +496,29 @@ $(function(){
 	function changeSource(id, url) {
 	   var video = document.querySelector(id);
 	   var source = video.querySelector("source");
-	   video.src = url;
+	   source.src = url;
 	   video.play();
 	}
 
 	if(isMobile==true){
 		$("#IMG_S01_01").find("img").attr("src","img/sec-00-seoul-climate-photo-bridge.jpg");
-		$("#IMG_S01_01").find(".caption").html("팔당, 소양강 댐 방류로 한강 수위가 높아지면서 8월 6일 서울 여의도 부근 올림픽대로 일부 구간이 침수돼 차량통행이 통제되고 있다.");
+		$("#IMG_S01_01").find(".caption").html("팔당, 소양강 댐 방류로 한강 수위가 높아지면서 2020년 8월 6일 서울 여의도 부근 올림픽대로 일부 구간이 침수됐다.");
 		$("#IMG_S02_01").find("img").attr("src","img/sec-01-growh-photo-m.jpg");
 		$("#IMG_S05_01").find("img").attr("src","img/fire-aust-mobile.jpg");
-
-		changeSource("#V_JEJU", "video/jeju_title_m.mp4")
-		changeSource("#V_MOUNT", "video/tree_title_m.mp4")
-		changeSource("#V_FIRE", "video/fire_title_m.mp4")
-		changeSource("#V_GROUND", "video/jeju_title_m.mp4")
+           
+        $(".sec-bg-video-pc").html("");
+        $(".sec-bg-video-pc").hide();
+		//changeSource("#V_JEJU", "video/jeju_title_m.mp4")
+		//changeSource("#V_MOUNT", "video/tree_title_m.mp4")
+		//changeSource("#V_FIRE", "video/fire_title_m.mp4")
+		//changeSource("#V_GROUND", "video/ground_bee_title_m.mp4")
 	}else{
-		changeSource("#V_JEJU", "video/jeju_4k_title_video_final.mp4")
-		changeSource("#V_MOUNT", "video/tree_title_video.mp4")
-		changeSource("#V_FIRE", "video/fire_title_video_4.mp4")
-		changeSource("#V_GROUND", "video/ground_bee_title_video.mp4")
+        $(".sec-bg-video-m").html("");
+        $(".sec-bg-video-m").hide();
+		//changeSource("#V_JEJU", "video/jeju_4k_title_video_final.mp4")
+		//changeSource("#V_MOUNT", "video/tree_title_video.mp4")
+		//changeSource("#V_FIRE", "video/fire_title_video_4.mp4")
+		//changeSource("#V_GROUND", "video/ground_bee_title_video.mp4")
 	}
 	/******** 모바일 전용 조정 ********/
 
@@ -497,7 +534,7 @@ $(function(){
 	$(".twentytwenty-container").on("mousedown", function(){
 		$(this).parent("div").siblings(".click-animation").fadeOut();
 	});
-	$(".twentytwenty-container").on("touch", function(){
+	$(".twentytwenty-container").on("touchstart", function(){
 		$(this).parent("div").siblings(".click-animation").fadeOut();
 	});
 
@@ -516,11 +553,11 @@ $(function(){
 
 	function init(){
 		activataTw();
-		introAnimation();
 		setTitleConPos();
+        introAnimation();
 	}
 
-	$(".loading-page").fadeOut(200, function(){
+	$(".loading-page").fadeOut(1000, function(){
 		init();
 	});
 
