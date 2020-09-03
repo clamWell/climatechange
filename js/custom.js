@@ -50,7 +50,7 @@ $(function(){
 		var geometry = new THREE.SphereGeometry( 0.5, 32, 32 );
 		var material =new THREE.MeshPhongMaterial({
 			map: THREE.ImageUtils.loadTexture('img/earth-blue-marble-low.jpg'),
-			//bumpMap: THREE.ImageUtils.loadTexture('img/earth-topology.jpg'),
+			//bumpMap: THREE.ImageUtils.loadTexture('http://img.khan.co.kr/spko/storytelling/2020/climatechange/earth-topology.jpg'),
 			//bumpScale: 0.005,
 		  })
 		var Globe = new THREE.Mesh( geometry, material );
@@ -501,10 +501,10 @@ $(function(){
 	}
 
 	if(isMobile==true){
-		$("#IMG_S01_01").find("img").attr("src","img/sec-00-seoul-climate-photo-bridge.jpg");
+		$("#IMG_S01_01").find("img").attr("src","http://img.khan.co.kr/spko/storytelling/2020/climatechange/sec-00-seoul-climate-photo-bridge.jpg");
 		$("#IMG_S01_01").find(".caption").html("팔당, 소양강 댐 방류로 한강 수위가 높아지면서 2020년 8월 6일 서울 여의도 부근 올림픽대로 일부 구간이 침수됐다.");
-		$("#IMG_S02_01").find("img").attr("src","img/sec-01-growh-photo-m.jpg");
-		$("#IMG_S05_01").find("img").attr("src","img/fire-aust-mobile.jpg");
+		$("#IMG_S02_01").find("img").attr("src","http://img.khan.co.kr/spko/storytelling/2020/climatechange/sec-01-growh-photo-m.jpg");
+		$("#IMG_S05_01").find("img").attr("src","http://img.khan.co.kr/spko/storytelling/2020/climatechange/fire-aust-mobile.jpg");
            
         $(".sec-bg-video-pc").html("");
         $(".sec-bg-video-pc").hide();

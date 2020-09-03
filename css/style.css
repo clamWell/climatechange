@@ -198,7 +198,7 @@ width: 27px; height: 30px;}
 .title-holder .title-split p img { height:100px; }
 .title-holder .title-merge { max-width: 770px; }
 .title-holder .title-merge .line { text-align: center;    display: inline; } 
-.globeIE { width:100%; height:700px; position: relative; background:#111; background: url("../img/globe_img.jpg") no-repeat; background-size:contain; 
+.globeIE { width:100%; height:700px; position: relative; background:#111; background: url("http://img.khan.co.kr/spko/storytelling/2020/climatechange/globe_img.jpg") no-repeat; background-size:contain; 
 background-position: center; }
 
 .top-byline {  margin: 20px auto; color:#fff; opacity:0.7;}
